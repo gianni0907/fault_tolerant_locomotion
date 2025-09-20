@@ -5,36 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fault-Tolerant Quadruped Locomotion</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Load MathJax for LaTeX rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
     <header>
         <div class="container">
             <h1>Fault-Tolerant Quadruped Locomotion</h1>
-            <p class="subtitle">Reinforcement Learning Policies for Robust Robot Movement</p>
+            <p class="subtitle">Reinforcement Learning Policies for Robot Control</p>
         </div>
     </header>
-
+    
     <main class="container">
         <section class="intro">
-            <h2>About This Project</h2>
-            <p>This project showcases advanced reinforcement learning policies designed for fault-tolerant locomotion in quadruped robots. Our research focuses on developing robust movement strategies that enable robots to continue functioning effectively even when facing mechanical failures or environmental challenges.</p>
+            <h2>Project Outline</h2>
+            <p>Our research focuses on fault-tolerant locomotion for quadruped robots. We showcase preliminary results obtained using an asymmetric actor-critic architecture trained with Proximal Policy Optimization (PPO) algorithms.</p>
+
+            <figure class="svg-viewer">
+                <h3>Architecture</h3>
+                <div style="height: 24px;"></div>
+                <img src="images/architecture.svg" alt="Project Overview Diagram" style="width:100%; max-width:600px; display:block; margin:auto;">
+                <figcaption>Asymmetric actor-critic model used for fault-tolerant quadruped locomotion</figcaption>
+            </figure>
         </section>
 
         <section class="videos">
-            <h2>Video Gallery</h2>
-            <div class="video-grid" id="videoGrid">
-                <!-- Video items will be dynamically loaded here -->
-                <div class="video-placeholder">
-                    <div class="placeholder-content">
-                        <h3>Videos Coming Soon</h3>
-                        <p>Video demonstrations of our fault-tolerant locomotion policies will be added here.</p>
-                        <div class="placeholder-icon">🎥</div>
-                    </div>
-                </div>
+            <h2>Simulations</h2>
+            <p>
+                The following MuJoCo simulations show a quadruped robot tracking a commanded velocity—linear in 
+                <span id="vx">\(x\)</span> and 
+                <span id="vy">\(y\)</span> direction and angular around 
+                <span id="wz">\(z\)</span>-axis—while empowered by a nominal locomotion policy (left) and a fault-tolerant locomotion policy (right).
+            </p>
+            <div class="video-grid" style="display: flex; gap: 24px; justify-content: center;">
+                <video src="videos/nominal_alleup_noisy.mp4" controls autoplay loop muted style="max-width: 100%; width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
+                <video src="videos/swing_ferkup.mp4" controls autoplay loop muted style="max-width: 100%; width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
             </div>
         </section>
 
-        <section class="features">
+        <section class="videos">
+            <h2>Experiments</h2>
+            <p>
+                Nominal locomotion policy deployed on a real quadruped robot ...
+            </p>
+            <div class="video-grid" style="display: flex; gap: 24px; justify-content: center;">
+                <video src="videos/exp_lb_fw.mp4" controls autoplay loop muted style="max-width: 100%; width: 250px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
+                <video src="videos/exp_lb_rotonspot.mp4" controls autoplay loop muted style="max-width: 100%; width: 250px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
+                <video src="videos/exp_lb_bw.mp4" controls autoplay loop muted style="max-width: 100%; width: 250px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
+                <video src="videos/exp_lb_lside.mp4" controls autoplay loop muted style="max-width: 100%; width: 250px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
+            </div>
+            <div style="height: 24px;"></div>
+            <p>
+                ...also including the arms
+            </p>
+            <div class="video-grid" style="display: flex; gap: 24px; justify-content: center;">
+                <video src="videos/exp_fb_fw.mp4" controls autoplay loop muted style="max-width: 100%; width: 300px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
+                <video src="videos/exp_fb_bw.mp4" controls autoplay loop muted style="max-width: 100%; width: 300px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
+                <video src="videos/exp_fb_side.mp4" controls autoplay loop muted style="max-width: 100%; width: 300px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
+            </div>
+            <div style="height: 24px;"></div>
+            <p>
+                Work in progress for sim-to-real transfer for fault-tolerant locomotion...
+            </p>
+            <div class="video-grid" style="display: flex; gap: 24px; justify-content: center;">
+                <video src="videos/exp_lb_swing.mp4" controls autoplay loop muted style="max-width: 100%; width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
+            </div>
+        </section>
+
+        <!-- <section class="features">
             <h2>Key Features</h2>
             <div class="features-grid">
                 <div class="feature-card">
@@ -50,12 +88,12 @@
                     <p>Practical solutions for quadruped robots in various environments.</p>
                 </div>
             </div>
-        </section>
+        </section> -->
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 Fault-Tolerant Locomotion Project. Research in Robotics and AI.</p>
+            <p>&copy; 2025 Giovanbattista Gravina - All rights reserved.</p>
         </div>
     </footer>
 
