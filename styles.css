@@ -85,11 +85,13 @@ h2 {
     margin-top: 2rem;
 }
 
-.video-item {
-    background: #f8f9fa;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+.video-item video {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        display: block;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
