@@ -19,26 +19,22 @@
     <main class="container">
         <section class="intro">
             <h2>Project Outline</h2>
-            <p>Our research focuses on fault-tolerant locomotion for quadruped robots. We showcase preliminary results obtained using an asymmetric actor-critic architecture trained with Proximal Policy Optimization (PPO) algorithms.</p>
+            <p>This project aims at learning a control policy capable of rapidly adapting to sudden joint failures in a medium-size quadruped robot locomoting on uneven terrain. To this end, we adopt a deep Reinforcement Learning framework based on an asymmetric actor-critic architecture, trained using Proximal Policy Optimization (PPO). Leveraging asymmetric training, we augment the learning objective with an auxiliary latent alignment term that encourages the actor to reconstruct fault-related privileged representations from a history of proprioceptive observations, while the critic has access to explicit fault information. The resulting policy operates at 50 Hz and outputs joint position targets tracked by a low-level PD controller running at 1 kHz.</p>
 
             <figure class="svg-viewer">
-                <h3>Architecture</h3>
                 <div style="height: 24px;"></div>
-                <img src="images/architecture.svg" alt="Project Overview Diagram" style="width:100%; max-width:600px; display:block; margin:auto;">
-                <figcaption>Asymmetric actor-critic model used for fault-tolerant quadruped locomotion</figcaption>
+                <img class="block-scheme-image" src="images/block_scheme.svg?v=2" alt="Project Overview Diagram">
+                <figcaption>Overview of the proposed training architecture.</figcaption>
             </figure>
         </section>
 
         <section class="videos">
             <h2>Simulations</h2>
             <p>
-                The following MuJoCo simulations show a quadruped robot tracking a commanded velocity—linear in 
-                <span id="vx">\(x\)</span> and 
-                <span id="vy">\(y\)</span> direction and angular around 
-                <span id="wz">\(z\)</span>-axis—while empowered by a nominal locomotion policy (left) and a fault-tolerant locomotion policy (right).
+                The following MuJoCo simulations show the Kyon quadruped robot, either equipped or not with its upper limbs,tracking a velocity commands while powered by our control policies. The quadruped robot is able to climb stairs (left) and handle the upper-body additional payload (right) under joint failure conditions.
             </p>
             <div class="video-grid" style="display: flex; gap: 24px; justify-content: center;">
-                <video src="videos/nominal_alleup_noisy.mp4" controls autoplay loop muted style="max-width: 100%; width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
+                <video src="videos/mjx_sim_rrhp_stairs.mp4" controls autoplay loop muted style="max-width: 100%; width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
                 <video src="videos/swing_ferkup.mp4" controls autoplay loop muted style="max-width: 100%; width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
             </div>
         </section>
@@ -46,15 +42,13 @@
         <section class="videos">
             <h2>Experiments</h2>
             <p>
-                Nominal locomotion policy deployed on a real quadruped robot ...
+                Zero-shot sim-to-real transfer of the learned policy on the hardware. 
             </p>
             <div class="video-grid" style="display: flex; gap: 24px; justify-content: center;">
-                <video src="videos/exp_lb_fw.mp4" controls autoplay loop muted style="max-width: 100%; width: 250px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
-                <video src="videos/exp_lb_rotonspot.mp4" controls autoplay loop muted style="max-width: 100%; width: 250px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
-                <video src="videos/exp_lb_bw.mp4" controls autoplay loop muted style="max-width: 100%; width: 250px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
-                <video src="videos/exp_lb_lside.mp4" controls autoplay loop muted style="max-width: 100%; width: 250px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
+                <video src="videos/rlkp_tradmill_exp.mp4" controls autoplay loop muted style="max-width: 100%; width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
+                <video src="videos/flkp_treadmill_exp.mp4" controls autoplay loop muted style="max-width: 100%; width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
             </div>
-            <div style="height: 24px;"></div>
+            <!-- <div style="height: 24px;"></div>
             <p>
                 ...also including the arms
             </p>
@@ -69,7 +63,7 @@
             </p>
             <div class="video-grid" style="display: flex; gap: 24px; justify-content: center;">
                 <video src="videos/exp_lb_swing.mp4" controls autoplay loop muted style="max-width: 100%; width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
-            </div>
+            </div> -->
         </section>
 
         <!-- <section class="features">

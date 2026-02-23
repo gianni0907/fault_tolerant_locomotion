@@ -272,6 +272,19 @@ figure {
     text-align: center;
 }
 
+.svg-viewer {
+    overflow: visible;
+}
+
+.block-scheme-image {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
 figcaption {
     margin-top: 1rem;
     font-size: 0.9rem;
