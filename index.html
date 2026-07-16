@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fault-Tolerant Quadruped Locomotion</title>
+    <title>Fault-Tolerant Locomotion</title>
     <link rel="stylesheet" href="styles.css">
     <!-- Load MathJax for LaTeX rendering -->
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -11,20 +11,37 @@
 <body>
     <header>
         <div class="container">
-            <h1>Fault-Tolerant Quadruped Locomotion</h1>
-            <p class="subtitle">Reinforcement Learning Policies for Robot Control</p>
+            <h1>Learning Fault-Tolerant Locomotion with Adaptive Gait Timing</h1>
+            <p class="authors">Giovanbattista Gravina, Luca Rossini, Carlo Rizzardo, Arturo Laurenzi, Nikos Tsagarakis</p>
+            <div class="header-links">
+                <a href="#" class="header-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                    </svg>
+                    Paper
+                </a>
+                <a href="#" class="header-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"/>
+                    </svg>
+                    Code
+                </a>
+            </div>
         </div>
     </header>
     
     <main class="container">
         <section class="intro">
-            <h2>Project Outline</h2>
-            <p>This project aims at learning a control policy capable of rapidly adapting to sudden joint failures in a medium-size quadruped robot locomoting on uneven terrain. To this end, we adopt a deep Reinforcement Learning framework based on an asymmetric actor-critic architecture, trained using Proximal Policy Optimization (PPO). Leveraging asymmetric training, we augment the learning objective with an auxiliary latent alignment term that encourages the actor to reconstruct fault-related privileged representations from a history of proprioceptive observations, while the critic has access to explicit fault information. The resulting policy operates at 50 Hz and outputs joint position targets tracked by a low-level PD controller running at 1 kHz.</p>
+            <h2>Abstract</h2>
+            <p>Hardware failures require legged robots to rapidly reorganize coordination and gait timing to maintain stability and mobility. This is particularly challenging for larger quadrupeds, where increased mass and tighter actuation limits reduce the feasibility of aggressive, high-frequency compensation strategies often observed on smaller platforms. In this work, we propose a deep reinforcement learning approach for fault-tolerant locomotion under actuator power loss. The method employs an asymmetric actor-critic architecture in which the critic has access to privileged information during training, while the actor learns to reconstruct a corresponding latent representation from proprioceptive observations. We introduce a latent-alignment loss that encourages consistency between actor and critic representations. Additionally, we augment the action space with a learnable gait frequency parameter, enabling adaptive gait timing in response to terrain variations and actuator degradation without predefined faulty-leg strategies. The approach is validated in high-fidelity simulation on uneven terrain and real-world experiments on flat ground using the 68 kg KYON quadruped robot.</p>
 
-            <figure class="svg-viewer">
+            <figure>
+                <h3>Architecture</h3>
                 <div style="height: 24px;"></div>
                 <img class="block-scheme-image" src="images/block_scheme.svg?v=2" alt="Project Overview Diagram">
-                <figcaption>Overview of the proposed training architecture.</figcaption>
+                <figcaption>
+                    The proposed architecture consists of an actor and a critic, each comprising an encoder and a head network. The critic encoder embeds the privileged observation <span>\(\boldsymbol{o}^{\text{p}}\)</span>, composed of proprioceptive observation <span>\(\boldsymbol{o}\)</span> and privileged information <span>\(\boldsymbol{e}\)</span>, into a latent representation <span>\(\boldsymbol{r}\)</span>. This latent vector is then concatenated with <span>\(\boldsymbol{o}\)</span> and the terrain-related observations <span>\(\boldsymbol{o}^{\text{z}}\)</span> to form the input to the critic head for value estimation. In parallel, the actor encoder processes a history of <span>\(H\)</span> proprioceptive observations and outputs a latent vector <span>\(\tilde{\boldsymbol{r}}\)</span>. The actor head receives the concatenation of <span>\(\tilde{\boldsymbol{r}}\)</span>, <span>\(\boldsymbol{o}\)</span>, and <span>\(\boldsymbol{o}^{\text{z}}\)</span> to produce the policy action <span>\(\boldsymbol{a}\)</span>.
+                </figcaption>
             </figure>
         </section>
 
@@ -33,9 +50,16 @@
             <p>
                 The following MuJoCo simulations show the Kyon quadruped robot, either equipped or not with its upper limbs, tracking velocity commands while powered by our control policies. The quadruped robot is able to climb stairs (left) and handle the upper-body additional payload (right) under joint failure conditions.
             </p>
-            <div class="video-grid" style="display: flex; gap: 24px; justify-content: center;">
-                <video src="videos/mjx_sim_rrhp_stairs.mp4" controls autoplay loop muted style="max-width: 100%; width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
-                <video src="videos/swing_ferkup.mp4" controls autoplay loop muted style="max-width: 100%; width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
+            <div class="video-grid">
+                <video src="videos/mjx_sim_rrhp_stairs.mp4" controls autoplay loop muted playsinline></video>
+                <video src="videos/swing_ferkup.mp4" controls autoplay loop muted playsinline></video>
+            </div>
+            <p>
+                We further validate the learned policy sim-to-sim in MuJoCo through the XBot2 middleware, running it on the same software stack deployed on the hardware. The robot traverses slopes (left) and stairs (right).
+            </p>
+            <div class="video-grid">
+                <video src="videos/xbot_slopes2.mp4" controls autoplay loop muted playsinline></video>
+                <video src="videos/xbot_stairs.mp4" controls autoplay loop muted playsinline></video>
             </div>
         </section>
 
@@ -44,45 +68,23 @@
             <p>
                 Zero-shot sim-to-real transfer of the learned policy on the hardware. 
             </p>
-            <div class="video-grid" style="display: flex; gap: 24px; justify-content: center;">
-                <video src="videos/rlkp_tradmill_exp.mp4" controls autoplay loop muted style="max-width: 100%; width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
-                <video src="videos/flkp_treadmill_exp.mp4" controls autoplay loop muted style="max-width: 100%; width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
+            <div class="video-grid">
+                <video src="videos/rlkp_tradmill_exp.mp4" controls autoplay loop muted playsinline></video>
+                <video src="videos/flkp_treadmill_exp.mp4" controls autoplay loop muted playsinline></video>
             </div>
-            <!-- <div style="height: 24px;"></div>
-            <p>
-                ...also including the arms
-            </p>
-            <div class="video-grid" style="display: flex; gap: 24px; justify-content: center;">
-                <video src="videos/exp_fb_fw.mp4" controls autoplay loop muted style="max-width: 100%; width: 300px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
-                <video src="videos/exp_fb_bw.mp4" controls autoplay loop muted style="max-width: 100%; width: 300px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
-                <video src="videos/exp_fb_side.mp4" controls autoplay loop muted style="max-width: 100%; width: 300px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
-            </div>
-            <div style="height: 24px;"></div>
-            <p>
-                Work in progress for sim-to-real transfer for fault-tolerant locomotion...
-            </p>
-            <div class="video-grid" style="display: flex; gap: 24px; justify-content: center;">
-                <video src="videos/exp_lb_swing.mp4" controls autoplay loop muted style="max-width: 100%; width: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></video>
-            </div> -->
         </section>
 
-        <!-- <section class="features">
-            <h2>Key Features</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3>🤖 Fault Tolerance</h3>
-                    <p>Robust policies that adapt to mechanical failures and maintain stable locomotion.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🧠 Reinforcement Learning</h3>
-                    <p>Advanced RL algorithms trained to handle diverse locomotion challenges.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🎯 Real-world Application</h3>
-                    <p>Practical solutions for quadruped robots in various environments.</p>
-                </div>
+        <section class="videos">
+            <h2>Full Project Video</h2>
+            <!-- TODO: replace VIDEO_ID_HERE below (both the link and the iframe) with the YouTube video ID once the project video is published. -->
+            <p>
+                Watch the following <a href="https://youtu.be/VIDEO_ID_HERE" target="_blank" rel="noopener">video</a> for a comprehensive overview of the project.
+            </p>
+            <div class="video-embed">
+                <iframe src="https://www.youtube.com/embed/VIDEO_ID_HERE" title="Learning Fault-Tolerant Locomotion with Adaptive Gait Timing" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
-        </section> -->
+        </section>
+
     </main>
 
     <footer>
